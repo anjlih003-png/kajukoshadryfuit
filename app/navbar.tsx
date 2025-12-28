@@ -14,14 +14,14 @@ import { IoBagOutline } from "react-icons/io5";
 import { HiOutlineMailOpen } from "react-icons/hi";
 
 export default function Navbar() {
-    const [query, setQuery] = useState('')
+    // const [query, setQuery] = useState('')
     const router = useRouter()
 
     useEffect(() => {
         const initMenu = async () => {
             try {
                 // Bootstrap JS
-                await import('bootstrap/dist/js/bootstrap.bundle.min.js')
+                // await import('bootstrap/dist/js/bootstrap.bundle.min.js')
 
                 // jQuery
                 // const jQuery = (await import('jquery')).default
@@ -34,12 +34,12 @@ export default function Navbar() {
                 const $mainMenuState = $('#main-menu-state')
                 if (!$menu.length || !$mainMenuState.length) return
 
-                $menu.smartmenus({
+                ($menu as any).smartmenus({
                     mainMenuSubOffsetX: -1,
                     mainMenuSubOffsetY: 4,
                     subMenusSubOffsetX: 6,
-                    subMenusSubOffsetY: -6,
-                })
+                });
+
 
                 if (window.innerWidth <= 991) {
                     const onChange = function (this: HTMLInputElement) {
@@ -57,10 +57,12 @@ export default function Navbar() {
                     $mainMenuState.on('change', onChange)
 
                     const onLinkClick = () => {
-                        if ($mainMenuState[0].checked) {
-                            $mainMenuState.prop('checked', false).trigger('change')
+                        const inputEl = $mainMenuState[0] as HTMLInputElement;
+                        if (inputEl.checked) {
+                            $mainMenuState.prop('checked', false).trigger('change');
                         }
                     }
+
 
                     $menu.find('a').on('click', onLinkClick)
 
@@ -77,12 +79,12 @@ export default function Navbar() {
         initMenu()
     }, [])
 
-    const handleSearch = (e: React.FormEvent) => {
-        e.preventDefault()
-        if (query.trim()) {
-            router.push(`/search?q=${query}`)
-        }
-    }
+    // const handleSearch = (e: React.FormEvent) => {
+    //     e.preventDefault()
+    //     if (query.trim()) {
+    //         router.push(`/search?q=${query}`)
+    //     }
+    // }
 
 
     return (
